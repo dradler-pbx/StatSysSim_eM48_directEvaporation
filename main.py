@@ -37,14 +37,15 @@ srccold = vcs.Source(id='srccold', system=system, mdot=mdot_air_evap, p=1e5, h=h
 snkcold = vcs.Sink(id='snkcold', system=system)
 
 # Junctions
-cpr_cond = vcs.Junction(id='cpr_cond', system=system, medium=ref, upstream_component=cpr, upstream_id='outlet_A', downstream_component=cond, downstream_id='inlet_A', mdot_init=mdot_init, p_init=pc_init, h_init=h2_init)
-cond_ihx = vcs.Junction(id='cond_ihx', system=system, medium=ref, upstream_component=cond, upstream_id='outlet_A', downstream_component=ihx, downstream_id='inlet_A', mdot_init= mdot_init, p_init=pc_init, h_init=h3_init)
-ihx_evap = vcs.Junction(id='ihx_evap', system=system, medium=ref, upstream_component=ihx, upstream_id='outlet_A', downstream_component=evap, downstream_id='inlet_A', mdot_init= mdot_init, p_init=p0_init, h_init=h4_init)
-evap_ihx = vcs.Junction(id='evap_ihx', system=system, medium=ref, upstream_component=evap, upstream_id='outlet_A', downstream_component=ihx, downstream_id='inlet_B', mdot_init=mdot_init, p_init=p0_init, h_init=h5_init)
-ihx_cpr = vcs.Junction(id='ihx_cpr', system=system, medium=ref, upstream_component=ihx, upstream_id='outlet_B', downstream_component=cpr, downstream_id='inlet_A', mdot_init=mdot_init, p_init=p0_init, h_init=h1_init)
-srcSL_evap = vcs.Junction(id='srcSL_evap', system=system, medium=air, upstream_component=srccold, upstream_id='outlet_A', downstream_component=evap, downstream_id='inlet_B', mdot_init=mdot_air_evap, p_init=p_air_box, h_init=h_air_box)
-evap_snkSL = vcs.Junction(id='evap_snkSL', system=system, medium=air, upstream_component=evap, upstream_id='outlet_B', downstream_component=snkcold, downstream_id='inlet_A', mdot_init=mdot_air_evap, p_init=p_air_box, h_init=h_air_out_guess)
+cpr_cond = vcs.Junction(id='cpr_cond', system=system, medium=ref, upstream_component=cpr, upstream_port_id='outlet_A', downstream_component=cond, downstream_port_id='inlet_A', mdot_init=mdot_init, p_init=pc_init, h_init=h2_init)
+cond_ihx = vcs.Junction(id='cond_ihx', system=system, medium=ref, upstream_component=cond, upstream_port_id='outlet_A', downstream_component=ihx, downstream_port_id='inlet_A', mdot_init= mdot_init, p_init=pc_init, h_init=h3_init)
+ihx_evap = vcs.Junction(id='ihx_evap', system=system, medium=ref, upstream_component=ihx, upstream_port_id='outlet_A', downstream_component=evap, downstream_port_id='inlet_A', mdot_init= mdot_init, p_init=p0_init, h_init=h4_init)
+evap_ihx = vcs.Junction(id='evap_ihx', system=system, medium=ref, upstream_component=evap, upstream_port_id='outlet_A', downstream_component=ihx, downstream_port_id='inlet_B', mdot_init=mdot_init, p_init=p0_init, h_init=h5_init)
+ihx_cpr = vcs.Junction(id='ihx_cpr', system=system, medium=ref, upstream_component=ihx, upstream_port_id='outlet_B', downstream_component=cpr, downstream_port_id='inlet_A', mdot_init=mdot_init, p_init=p0_init, h_init=h1_init)
+srcSL_evap = vcs.Junction(id='srcSL_evap', system=system, medium=air, upstream_component=srccold, upstream_port_id='outlet_A', downstream_component=evap, downstream_port_id='inlet_B', mdot_init=mdot_air_evap, p_init=p_air_box, h_init=h_air_box)
+evap_snkSL = vcs.Junction(id='evap_snkSL', system=system, medium=air, upstream_component=evap, upstream_port_id='outlet_B', downstream_component=snkcold, downstream_port_id='inlet_A', mdot_init=mdot_air_evap, p_init=p_air_box, h_init=h_air_out_guess)
 
+system.initialize()
 system.run(full_output=True)
 
 # Plot the results
@@ -76,4 +77,4 @@ plot_dict = {
     'refrigerant': ref,
     'compressor': cpr
 }
-system.plotCycle(dict=plot_dict, cycle_img_path=r'diagram.png')
+system.plot_cycle(plot_dict=plot_dict, cycle_img_path=r'diagram.png')
